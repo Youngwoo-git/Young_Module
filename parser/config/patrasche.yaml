@@ -1,0 +1,40 @@
+# YOLOv5 🚀 by Ultralytics, GPL-3.0 license
+# COCO 2017 dataset http://cocodataset.org by Microsoft
+# Example usage: python train.py --data coco.yaml
+# parent
+# ├── yolov5
+# └── datasets
+#     └── coco  ← downloads here (20.1 GB)
+
+
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: "/home/ubuntu/workspace/ywshin/construct/seg_eval/yolov5/train_dataset/"  # dataset root dir
+train: "train"  # train images (relative to 'path') 118287 images
+val: "val"  # val images (relative to 'path') 5000 images
+test: ""  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+# Classes
+# nc: 116  # number of classes
+# names: ['person', 'bicycle', 'car', 'motorcycle', 'bus', 'truck', 'traffic light', 'fire hydrant', 'stop sign', 'bench', 'bird', 'cat', 'dog', 'cow', 'backpack', 'umbrella', 'handbag', 'suitcase', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'bottle', 'wine glass', 'cup', 'bowl', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'microwave', 'sink', 'refrigerator', 'book', 'vase', 'parasol', 'palette', 'rock', 'bollard', 'hat', 'handcart', 'grating', 'pothole', 'stroller', 'raised spot', 'streetlight', 'PE barrier', 'fence', 'fire extinguisher', 'telegraph pole', 'tent', 'desk', 'guardrail', 'boiler', 'manhole', 'washer', 'stove', 'firewood', 'sign', 'boxes', 'PE tank', 'mat', 'vacuum', 'tree', 'hanger', 'door', 'parking bump', 'pillar', 'window seat', 'rubber cone', 'air cleaner', 'frame', 'entry barrier', 'standing light', 'power strip', 'roll mat', 'container', 'deck', 'trashcan', 'stairs', 'guitar', 'mannequin', 'banner', 'basketball stands', 'goalpost', 'arbor', 'table', 'mirror', 'balloon sign', 'trash heap', 'electricity control panel', 'curtain', 'outdoor unit of air conditioner', 'bookshelf', 'tripod', 'tissue box', 'shelf', 'plastic bag', 'kerb', 'fire truck', 'rainwater pipe', 'bike rack', 'traffic signs', 'forklift', 'busstop sign', 'momument', 'stone', 'booth', 'cart rack', 'hand cart', 'stone flat bench', 'stone handrail', 'faucet'] # class names
+nc: 107  # number of classes
+names: ['person', 'bicycle', 'car', 'motorcycle', 'traffic light', 'bus', 'truck', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'bottle', 'toilet', 'tv', 'bird', 'cat', 'dog', 'cow', 'microwave', 'sink', 'refrigerator', 'book', 'palette', 'rock', 'bollard', 'hat', 'stroller', 'fence', 'raised spot', 'forklift', 'tent', 'mat', 'boiler', 'wine glass', 'cup', 'washer', 'stove', 'firewood', 'boxes', 'PE tank', 'vacuum', 'tree', 'hanger', 'door', 'parking bump', 'pillar', 'rubber cone', 'air cleaner', 'frame', 'standing light', 'power', 'roll mat', 'container', 'deck', 'trashcan', 'stairs', 'guitar', 'mannequin', 'basketball stands', 'goalpost', 'arbor', 'mirror', 'balloon sign', 'trash heap', 'curtain', 'electricity control panel', 'tripod', 'tissue box', 'outdoor unit of air conditioner', 'kerb', 'rainwater pipe', 'bike rack', 'traffic signs', 'momument', 'booth', 'faucet', 'sculpture', 'window', 'fan', 'guardrail', 'telegraph pole', 'pothole', 'wheelchair', 'parasol', 'bowl', 'table', 'vase', 'bag', 'fire extinguisher', 'fire hydrant', 'stone', 'banner', 'cart', 'PE barrier', 'entry barrier', 'sign', 'chair', 'desk', 'bed', 'shelf', 'streetlight', 'flower bed', 'toy car', 'swing', 'net post', 'electric vehicle', 'exerciser']
+
+
+
+# Download script/URL (optional)
+download: |
+  from utils.general import download, Path
+
+
+  # Download labels
+  segments = False  # segment or box labels
+  dir = Path(yaml['path'])  # dataset root dir
+  url = 'https://github.com/ultralytics/yolov5/releases/download/v1.0/'
+  urls = [url + ('coco2017labels-segments.zip' if segments else 'coco2017labels.zip')]  # labels
+  download(urls, dir=dir.parent)
+
+  # Download data
+  urls = ['http://images.cocodataset.org/zips/train2017.zip',  # 19G, 118k images
+          'http://images.cocodataset.org/zips/val2017.zip',  # 1G, 5k images
+          'http://images.cocodataset.org/zips/test2017.zip']  # 7G, 41k images (optional)
+  download(urls, dir=dir / 'images', threads=3)
