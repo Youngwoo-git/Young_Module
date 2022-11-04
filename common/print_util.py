@@ -58,10 +58,3 @@ class Printer:
         print_s = s.format(self.fill_str_with_space("source directory:"), input_dir, self.fill_str_with_space("output directory:"), output_dir)
         print(print_s)
         return print_s
-    
-def reset_output(output_dir):
-    if os.path.isdir(output_dir):
-        shutil.rmtree(output_dir)
-        os.mkdir(output_dir)
-    else:
-        os.mkdir(output_dir)
